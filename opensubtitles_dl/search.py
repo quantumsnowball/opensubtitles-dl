@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 
 def make_url(*words, lang):
@@ -10,6 +11,14 @@ def make_url(*words, lang):
 
 def search(*words, lang):
     url = make_url(*words, lang=lang)
-    resp = requests.get(url)
+    session = requests.Session()
+    session.headers.update({'user-agent': 'Mozilla/5.0'})
+    resp = session.get(url)
+    with open('html.html', 'wb') as f:
+        f.write(resp.content)
+    soup = BeautifulSoup(resp.content)
+    table = soup.select_one('#search_results')
+
+    
 
     return url
