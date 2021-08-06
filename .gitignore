@@ -1,0 +1,10 @@
+# git
+.git/
+
+# python
+__pycache__/
+*.egg-info/
+*.pyc
+
+# ide
+.vscode/
