@@ -19,6 +19,24 @@ def extract_innerhtml(ct):
     return ''
 
 
+def extract_titles(trs):
+    titles = []
+    for tr in trs:
+        td = tr.select_one('td[id^=main]')
+        title = extract_innerhtml(td.contents)
+        titles.append(title)
+    return titles
+
+
+def extract_links(trs, domain='www.opensubtitles.org'):
+    links = []
+    for tr in trs:
+        tds = tr.select('td')
+        link = tds[4].select_one('a')['href']
+        links.append(f'https://{domain}{link}')
+    return links
+
+
 def search(*words, lang):
     url = make_url(*words, lang=lang)
     session = requests.Session()
@@ -29,9 +47,10 @@ def search(*words, lang):
     soup = BeautifulSoup(resp.content, 'lxml')
     table = soup.select_one('#search_results')
     trs = table.select('tr[id^=name]')
-    for i, tr in enumerate(trs):
-        td = tr.select_one('td[id^=main]')
-        title = extract_innerhtml(td.contents)
+    titles = extract_titles(trs)
+    links = extract_links(trs)
+    for i, title in enumerate(titles):
         print(f'{i+1: >2}. {title}')
-
+    for i, link in enumerate(links):
+        print(f'{i+1: >2}. {link}')
     return url
