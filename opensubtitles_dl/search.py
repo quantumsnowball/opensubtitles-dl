@@ -29,6 +29,7 @@ def search(words, lang, limit):
     results = [entry(r['SubFileName'], r['SubLanguageID'], r['ZipDownloadLink'])
                for r in raw]
     # let user choose the correct subtitle to download
+    N = len(results)
     print('Please select subtitle by id:')
 
     def get_batch():
@@ -40,7 +41,8 @@ def search(words, lang, limit):
     for p, batch in enumerate(get_batch()):
         for i, en in enumerate(batch):
             print(f'{p*limit+i+1: >3}. {en.language}, {en.name}')
-        user_input = input(f'[{(p+1)*limit: >3} / {len(results)}] | #id, (n)ext or (q)uit >>> ')
+        user_input = input(
+            f'[{min(N, (p+1)*limit): >3} / {N}] | #id, (n)ext or (q)uit >>> ')
         if user_input.lower() == 'q':
             return
         if user_input.lower() == 'n' or user_input == '':
