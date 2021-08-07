@@ -21,13 +21,14 @@ def _save_sub_link_as(sub_link, save_path, ext):
     logging.debug(f'save_to = {save_to}')
 
 
-def search(words, lang, limit, file_hash=None, file_size=None, save_path=None):
+def search(keywords, lang, limit, file_hash=None, file_size=None, save_path=None):
     # prepare the rest url
     file_hash_string, file_size_string = None, None
     if file_hash and file_size:
         file_hash_string = f'moviebytesize-{file_hash}'
         file_size_string = f'moviehash-{file_size}'
-    query_string = urllib.parse.quote(f'query-{" ".join(words)}')
+    query_string = urllib.parse.quote(
+        f'query-{" ".join(keywords)}') if len(keywords) > 0 else None
     language_string = f'sublanguageid-{lang}'
     non_empty_fields = list(filter(
         None, [file_hash_string, file_size_string, query_string, language_string]))

@@ -6,7 +6,7 @@ from opensubtitles_dl.utils import file_hash, file_size
 
 
 @click.command(short_help='Keywords to search')
-@click.argument('keywords', nargs=-1, required=True)
+@click.argument('keywords', nargs=-1)
 @click.option('-l', '--lang', default='eng', show_default=True, help='Subtitle language')
 @click.option('-n', '--limit', default=10, show_default=True, help='Maximum number of result to show')
 @click.option('-t', '--target', default=None,
