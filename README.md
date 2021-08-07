@@ -1,7 +1,16 @@
 # opensubtitles-dl
 
-
+## Overview
 Search and download from opensubtitles.org from the command line.
+
+## Install
+To install the `master` branch by default:
+
+    pip install --force git+https://github.com/quantumsnowball/opensubtitles-dl.git
+
+To install the `dev` branch including the most updated features:
+
+    pip install --force git+https://github.com/quantumsnowball/opensubtitles-dl.git@dev
 
 ## Usage
     Usage: opensubtitles-dl [OPTIONS] KEYWORDS...
