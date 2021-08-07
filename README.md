@@ -1,10 +1,15 @@
 # opensubtitles-dl
 
 
-Target to download from opensubtitles.org from the command line.
+Search and download from opensubtitles.org from the command line.
 
 ## Usage
+    Usage: opensubtitles-dl [OPTIONS] KEYWORDS...
 
-`
-opensubtitles-dl [OPTIONS] MEDIA_NAME
-`
+      KEYWORDS is the list of keywords to search on opensubtitles.org
+
+    Options:
+      -l, --lang TEXT      Subtitle language  [default: eng]
+      -n, --limit INTEGER  Maximum number of result to show  [default: 10]
+      --debug              Switch on to print debug message
+      --help               Show this message and exit.
