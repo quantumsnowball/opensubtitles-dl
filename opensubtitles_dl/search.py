@@ -4,6 +4,7 @@ import json
 import webbrowser
 from collections import namedtuple
 from itertools import islice
+import logging
 
 
 BASE_URL = 'https://rest.opensubtitles.org/search'
@@ -15,12 +16,20 @@ def search(words, lang, limit):
     query_string = urllib.parse.quote(f'query-{" ".join(words)}')
     language_string = f'sublanguageid-{lang}'
     url = f'{BASE_URL}/{query_string}/{language_string}'
+    logging.debug(f'url = "{url}"')
     # make rest request using the Agent
     session = requests.Session()
     session.headers.update({'user-agent': USER_AGENT})
     resp = session.get(url)
+    # make sure the response is successful
+    logging.debug(f'response code = {resp.status_code}')
+    if resp.status_code != 200:
+        print(
+            f'Server returned {resp.status_code}. Please try other keywords or languages.')
+        return
     raw = json.loads(resp.content)
     # if no result returned, quit the program
+    logging.debug(f'len(raw) = {len(raw)}')
     if len(raw) <= 0:
         print('No result. Please try other keywords or languages.')
         return
