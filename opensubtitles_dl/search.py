@@ -8,7 +8,7 @@ BASE_URL = 'https://rest.opensubtitles.org/search'
 USER_AGENT = 'TemporaryUserAgent'
 
 
-def search(*words, lang):
+def search(words, lang, limit):
     # prepare the rest url
     query_string = urllib.parse.quote(f'query-{" ".join(words)}')
     language_string = f'sublanguageid-{lang}'
@@ -29,5 +29,5 @@ def search(*words, lang):
                for r in raw]
     # let user choose the correct subtitle to download
     print('Please select subtitle:')
-    for i, en in enumerate(results):
+    for i, en in enumerate(results[:limit]):
         print(f'{i+1: >2}. {en.language}, {en.name}, {en.link}')
