@@ -13,3 +13,4 @@ def cli(keywords, lang):
 if __name__ == '__main__':
     # cli(('spider', 'man'))
     cli(('nomadland'))
+    # cli(('lalaland'), 'all')
