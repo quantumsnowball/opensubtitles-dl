@@ -13,9 +13,16 @@ USER_AGENT = 'TemporaryUserAgent'
 
 def search(words, lang, limit, file_hash=None, file_size=None):
     # prepare the rest url
+    file_hash_string, file_size_string = None, None
+    if file_hash and file_size:
+        file_hash_string = f'moviebytesize-{file_hash}'
+        file_size_string = f'moviehash-{file_size}'
     query_string = urllib.parse.quote(f'query-{" ".join(words)}')
     language_string = f'sublanguageid-{lang}'
-    url = f'{BASE_URL}/{query_string}/{language_string}'
+    non_empty_fields = list(filter(None, [file_hash_string, file_size_string, query_string, language_string]))
+    logging.debug(f'non_empty_fields = {non_empty_fields}')
+    url_suffix = '/'.join(non_empty_fields)
+    url = f'{BASE_URL}/{url_suffix}'
     logging.debug(f'url = "{url}"')
     # make rest request using the Agent
     session = requests.Session()

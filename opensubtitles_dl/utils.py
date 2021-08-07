@@ -68,8 +68,8 @@ def _test_file_hash():
     """
 
 
-def file_size(name):
-    file_stats = os.stat(name)
+def file_size(path):
+    file_stats = os.stat(path)
     byte_size = file_stats.st_size
     return byte_size
 
