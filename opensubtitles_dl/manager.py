@@ -28,6 +28,8 @@ def cli(keywords, lang, limit, target, auto_save, debug):
         movie_size = file_size(target)
         logging.debug(f'movie_hash = {movie_hash}')
         logging.debug(f'movie_size = {movie_size}')
+        # append file name to list of keywords to increase search accuracy
+        keywords += (os.path.basename(target), )
         if auto_save:
             save_path = os.path.splitext(target)[0]
     # call the search function
