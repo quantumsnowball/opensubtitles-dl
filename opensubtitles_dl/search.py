@@ -1,5 +1,7 @@
+import os
 import urllib
 import requests
+import gzip
 import json
 import webbrowser
 from collections import namedtuple
@@ -11,7 +13,15 @@ BASE_URL = 'https://rest.opensubtitles.org/search'
 USER_AGENT = 'TemporaryUserAgent'
 
 
-def search(words, lang, limit, file_hash=None, file_size=None):
+def _save_sub_link_as(sub_link, save_path, ext):
+    resp = urllib.request.urlopen(sub_link)
+    save_to = f'{save_path}{ext}'
+    with open(save_to, 'wb') as f:
+        f.write(gzip.decompress(resp.read()))
+    logging.debug(f'save_to = {save_to}')
+
+
+def search(words, lang, limit, file_hash=None, file_size=None, save_path=None):
     # prepare the rest url
     file_hash_string, file_size_string = None, None
     if file_hash and file_size:
@@ -19,7 +29,8 @@ def search(words, lang, limit, file_hash=None, file_size=None):
         file_size_string = f'moviehash-{file_size}'
     query_string = urllib.parse.quote(f'query-{" ".join(words)}')
     language_string = f'sublanguageid-{lang}'
-    non_empty_fields = list(filter(None, [file_hash_string, file_size_string, query_string, language_string]))
+    non_empty_fields = list(filter(
+        None, [file_hash_string, file_size_string, query_string, language_string]))
     logging.debug(f'non_empty_fields = {non_empty_fields}')
     url_suffix = '/'.join(non_empty_fields)
     url = f'{BASE_URL}/{url_suffix}'
@@ -41,8 +52,8 @@ def search(words, lang, limit, file_hash=None, file_size=None):
         print('No result. Please try other keywords or languages.')
         return
     # parse and filter the json response
-    entry = namedtuple('entry', 'name language link')
-    results = [entry(r['SubFileName'], r['SubLanguageID'], r['ZipDownloadLink'])
+    entry = namedtuple('entry', 'name language sub_link zip_link')
+    results = [entry(r['SubFileName'], r['SubLanguageID'], r['SubDownloadLink'], r['ZipDownloadLink'])
                for r in raw]
     # let user choose the correct subtitle to download
     N = len(results)
@@ -55,15 +66,23 @@ def search(words, lang, limit, file_hash=None, file_size=None):
             yield batch
             batch = list(islice(itr, limit))
     for p, batch in enumerate(get_batch()):
+        # print all item on each page
         for i, en in enumerate(batch):
             print(f'{p*limit+i+1: >3}. {en.language}, {en.name}')
+        # ask for user input
         user_input = input(
             f'[{min(N, (p+1)*limit): >3} / {N}] | #id, (n)ext or (q)uit >>> ')
         if user_input.lower() == 'q':
             return
         if user_input.lower() == 'n' or user_input == '':
             continue
+        # if user has chosen a valid id, open or save the links
         chosen_id = int(user_input) - 1
-        chosen_link = results[chosen_id].link
-        webbrowser.get().open_new(chosen_link)
+        if save_path:
+            sub_link = results[chosen_id].sub_link
+            ext = os.path.splitext(results[chosen_id].name)[-1]
+            _save_sub_link_as(sub_link, save_path, ext)
+        else:
+            zip_link = results[chosen_id].zip_link
+            webbrowser.get().open_new(zip_link)
         break
