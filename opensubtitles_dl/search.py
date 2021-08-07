@@ -11,7 +11,7 @@ BASE_URL = 'https://rest.opensubtitles.org/search'
 USER_AGENT = 'TemporaryUserAgent'
 
 
-def search(words, lang, limit):
+def search(words, lang, limit, file_hash=None, file_size=None):
     # prepare the rest url
     query_string = urllib.parse.quote(f'query-{" ".join(words)}')
     language_string = f'sublanguageid-{lang}'
