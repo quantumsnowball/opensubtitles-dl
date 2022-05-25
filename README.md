@@ -4,7 +4,11 @@
 Search and download from opensubtitles.org from the command line.
 
 ## Install
-To install the `master` branch by default:
+To install from PyPi, simply run
+
+    pip install opensubtitles-dl
+    
+To install the `master` branch from git:
 
     pip install --force git+https://github.com/quantumsnowball/opensubtitles-dl.git
 
