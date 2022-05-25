@@ -10,9 +10,6 @@ setup(name='opensubtitles-dl',
       keywords=['subtitles', 'opensubtitles', ],
       python_requires='>=3.6',
       install_requires=['click', 'requests', ],
-      classifiers=[
-          'Programming Language :: Python 3.6'
-      ],
       entry_points={
           'console_scripts': [
               'opensubtitles-dl=opensubtitles_dl.manager:cli',
