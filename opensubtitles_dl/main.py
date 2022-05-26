@@ -18,8 +18,8 @@ def cli(keywords, lang, limit, target, auto_save, debug):
     # default params
     movie_hash, movie_size = None, None
     save_path = None
-    # if no arguments at all, display help and quit
-    if len(keywords) == 0:
+    # if no keywords or target file provided, display help and quit
+    if len(keywords) == 0 and target is None:
         click.echo(click.get_current_context().get_help())
         return
     # if debug is on lower logging level to zero
