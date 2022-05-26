@@ -34,9 +34,3 @@ def cli(keywords, lang, limit, target, auto_save, debug):
             save_path = os.path.splitext(target)[0]
     # call the search function
     search(keywords, lang, limit, movie_hash, movie_size, save_path)
-
-
-if __name__ == '__main__':
-    # cli(('spider', 'man'))
-    # cli(('nomadland'))
-    cli(('lalaland'), 'all')
