@@ -18,7 +18,7 @@ setup(name='opensubtitles-dl',
       install_requires=['click', 'requests', ],
       entry_points={
           'console_scripts': [
-              'opensubtitles-dl=opensubtitles_dl.manager:cli',
+              'opensubtitles-dl=opensubtitles_dl.cli:cli',
           ]
       }
 )
