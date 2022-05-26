@@ -4,7 +4,7 @@
 Search and download from opensubtitles.org from the command line.
 
 ## Install
-To install from PyPi, simply run
+To install from PyPi, simply run:
 
     pip install opensubtitles-dl
     

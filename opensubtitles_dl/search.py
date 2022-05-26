@@ -85,5 +85,5 @@ def search(keywords, lang, limit, file_hash=None, file_size=None, save_path=None
             _save_sub_link_as(sub_link, save_path, ext)
         else:
             zip_link = results[chosen_id].zip_link
-            webbrowser.get().open_new(zip_link)
+            webbrowser.get().open_new_tab(zip_link)
         break
