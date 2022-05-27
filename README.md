@@ -1,5 +1,7 @@
 # opensubtitles-dl
 
+![PyPI](https://img.shields.io/pypi/v/opensubtitles-dl)
+
 ## Overview
 Search and download from opensubtitles.org from the command line.
 
