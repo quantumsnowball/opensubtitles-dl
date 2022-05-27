@@ -18,6 +18,10 @@ def cli(keywords, lang, limit, target, auto_save, debug):
     # default params
     movie_hash, movie_size = None, None
     save_path = None
+    # if no keywords or target file provided, display help and quit
+    if len(keywords) == 0 and target is None:
+        click.echo(click.get_current_context().get_help())
+        return
     # if debug is on lower logging level to zero
     if debug:
         logging.basicConfig(level=0)
@@ -34,9 +38,3 @@ def cli(keywords, lang, limit, target, auto_save, debug):
             save_path = os.path.splitext(target)[0]
     # call the search function
     search(keywords, lang, limit, movie_hash, movie_size, save_path)
-
-
-if __name__ == '__main__':
-    # cli(('spider', 'man'))
-    # cli(('nomadland'))
-    cli(('lalaland'), 'all')

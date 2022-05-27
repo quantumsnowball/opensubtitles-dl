@@ -1,4 +1,4 @@
-from .manager import cli
+from .main import cli
 
 
 __all__ = ['cli', ]
