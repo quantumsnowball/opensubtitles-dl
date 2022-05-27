@@ -7,7 +7,7 @@ with open('README.md', 'r') as f:
 setup(
     name='opensubtitles-dl',
     packages=['opensubtitles_dl', ],
-    version='1.0.2',
+    version='1.0.3',
     description='A simple cli tool to download from opensubtitles.org',
     long_description=long_description,
     long_description_content_type='text/markdown',
