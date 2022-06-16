@@ -1,4 +1,3 @@
-from logging import FileHandler
 import struct
 import os
 
@@ -20,14 +19,14 @@ def file_hash(name):
         if filesize < 65536 * 2:
             return "SizeError"
 
-        for x in range(int(65536/bytesize)):
+        for _ in range(int(65536 / bytesize)):
             buffer = f.read(bytesize)
             (l_value,) = struct.unpack(longlongformat, buffer)
             hash += l_value
             hash = hash & 0xFFFFFFFFFFFFFFFF  # to remain as 64bit number
 
-        f.seek(max(0, filesize-65536), 0)
-        for x in range(int(65536/bytesize)):
+        f.seek(max(0, filesize - 65536), 0)
+        for _ in range(int(65536 / bytesize)):
             buffer = f.read(bytesize)
             (l_value,) = struct.unpack(longlongformat, buffer)
             hash += l_value

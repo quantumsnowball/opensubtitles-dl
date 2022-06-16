@@ -1,5 +1,6 @@
 import os
-import urllib
+import urllib.request
+import urllib.parse
 import requests
 import gzip
 import json
