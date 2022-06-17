@@ -13,7 +13,8 @@ from opensubtitles_dl.utils import file_hash, file_size
               help='Target file path used to calculate target file hash and size for more accurate search')
 @click.option('--auto-save', is_flag=True, help='Switch on to save directly to the same directory if target is provided')
 @click.option('--debug', is_flag=True, help='Switch on to print debug message')
-def cli(keywords, lang, limit, target, auto_save, debug):
+def cli(keywords: list[str], lang: str, limit: int,
+        target: str, auto_save: bool, debug: bool) -> None:
     """KEYWORDS is the list of keywords to be search on opensubtitles.org"""
     # default params
     movie_hash, movie_size = None, None

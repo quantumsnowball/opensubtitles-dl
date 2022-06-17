@@ -8,13 +8,14 @@ import webbrowser
 from collections import namedtuple
 from itertools import islice
 import logging
+from typing import Iterator
 
 
 BASE_URL = 'https://rest.opensubtitles.org/search'
 USER_AGENT = 'TemporaryUserAgent'
 
 
-def _save_sub_link_as(sub_link, save_path, ext):
+def _save_sub_link_as(sub_link, save_path, ext) -> None:
     resp = urllib.request.urlopen(sub_link)
     save_to = f'{save_path}{ext}'
     with open(save_to, 'wb') as f:
@@ -22,7 +23,12 @@ def _save_sub_link_as(sub_link, save_path, ext):
     logging.debug(f'save_to = {save_to}')
 
 
-def search(keywords, lang, limit, file_hash=None, file_size=None, save_path=None):
+def search(keywords: list[str],
+           lang: str,
+           limit: int,
+           file_hash: str | None = None,
+           file_size: int | None = None,
+           save_path: str | None = None) -> None:
     # prepare the rest url
     file_hash_string, file_size_string = None, None
     if file_hash and file_size:
@@ -61,7 +67,7 @@ def search(keywords, lang, limit, file_hash=None, file_size=None, save_path=None
     N = len(results)
     print('Please select subtitle by id:')
 
-    def get_batch():
+    def get_batch() -> Iterator[list[entry]]:
         itr = iter(results)
         batch = list(islice(itr, limit))
         while batch:

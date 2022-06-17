@@ -2,7 +2,7 @@ import struct
 import os
 
 
-def file_hash(name):
+def file_hash(name: str) -> str:
     """
     source: https://trac.opensubtitles.org/projects/opensubtitles/wiki/HashSourceCodes#Python
     """
@@ -40,7 +40,7 @@ def file_hash(name):
         return "IOError"
 
 
-def _test_file_hash():
+def _test_file_hash() -> None:
     """
     Test 1
     http://www.opensubtitles.org/addons/avi/breakdance.avi
@@ -67,13 +67,13 @@ def _test_file_hash():
     """
 
 
-def file_size(path):
+def file_size(path: str) -> int:
     file_stats = os.stat(path)
     byte_size = file_stats.st_size
     return byte_size
 
 
-def _test_file_size():
+def _test_file_size() -> None:
     """
     Test 1
     http://www.opensubtitles.org/addons/avi/breakdance.avi
